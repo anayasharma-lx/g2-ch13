@@ -7,10 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@500;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--ac:#059669;--bg:#FDF6EE;--card:#fff;--ink:#1A2E22;--ink2:#5F7A6A;--ok:#16A34A;--no:#DC2626;--r:20px}
+:root{--ac:#059669;--bg:#FDF6EE;--card:#fff;--ink:#1A2E2E;--ink2:#5F7A7A;--ok:#16A34A;--no:#DC2626;--r:20px}
 html,body{width:100%;min-height:100vh;font-family:'Poppins',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
-
-/* ── Header ── */
 .hdr{width:100%;position:sticky;top:0;z-index:100;background:var(--ac);box-shadow:0 4px 24px rgba(0,0,0,.15)}
 .hdr-in{max-width:640px;margin:0 auto;padding:14px 20px 0;text-align:center}
 .ch-n{font-family:'Grandstander',cursive;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.65)}
@@ -19,79 +17,53 @@ html,body{width:100%;min-height:100vh;font-family:'Poppins',sans-serif;backgroun
 .tab{flex:1;padding:9px 0;text-align:center;font-family:'Grandstander',cursive;font-size:14px;font-weight:800;cursor:pointer;border-radius:12px 12px 0 0;color:rgba(255,255,255,.6);transition:.2s;user-select:none}
 .tab.on{background:var(--bg);color:var(--ac)}
 .tab:not(.on):hover{color:#fff;background:rgba(255,255,255,.08)}
-
-/* ── Layout ── */
 .page{max-width:620px;margin:0 auto;padding:14px 14px 60px}
 .pnl{display:none;flex-direction:column;gap:16px}.pnl.on{display:flex}
 .card{background:var(--card);border-radius:var(--r);padding:20px 18px;box-shadow:0 3px 16px rgba(0,0,0,.06);position:relative;overflow:hidden}
 .cb{position:absolute;top:0;left:0;bottom:0;width:5px;border-radius:var(--r) 0 0 var(--r);background:var(--ac)}
 .ct{font-family:'Grandstander',cursive;font-size:15px;font-weight:800;padding-left:14px;margin-bottom:3px;line-height:1.3}
-.cs{font-size:12px;color:var(--ink2);padding-left:14px;margin-bottom:16px;line-height:1.6}
-
-/* ── Rating Grid ── */
-.rating-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
-.rating-card{border-radius:14px;padding:14px 6px 10px;text-align:center;border:2px solid rgba(0,0,0,.07);background:#fff;display:flex;flex-direction:column;align-items:center;gap:6px;transition:box-shadow .15s;min-width:0}
-.rating-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.08)}
-.rc-emoji{font-size:28px;line-height:1}
-.rc-name{font-size:10px;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em}
-.tally-zone{min-height:28px;display:flex;flex-wrap:wrap;gap:3px;justify-content:center;align-items:center;margin:2px 0;width:100%;padding:0 4px}
-.rc-num{font-family:'Grandstander',cursive;font-size:26px;font-weight:900;color:var(--ink);line-height:1}
-.vote-row{display:flex;gap:4px;align-items:center;justify-content:center;width:100%;margin-top:2px}
-.heart-btn{font-size:16px;cursor:pointer;background:var(--ac);border:none;padding:6px 0;border-radius:8px;transition:all .15s;line-height:1;flex:1;display:flex;align-items:center;justify-content:center;color:#fff}
-.heart-btn:hover{opacity:.85;transform:scale(1.06)}
-.heart-btn:active{transform:scale(.9)}
-.undo-sm{font-size:10px;font-weight:700;background:#fff;border:1.5px solid rgba(0,0,0,.1);color:var(--ink2);border-radius:8px;padding:6px 0;cursor:pointer;font-family:'Poppins',sans-serif;transition:all .12s;flex:1;white-space:nowrap}
-.undo-sm:hover{border-color:var(--no);color:var(--no)}
-
-/* ── Bar Chart ── */
-.chart-section{background:rgba(0,0,0,.02);border:1.5px solid rgba(0,0,0,.06);border-radius:16px;padding:14px;margin-bottom:14px}
-.chart-title{font-family:'Grandstander',cursive;font-size:13px;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
-.chart-wrap{position:relative}
-/* bar-area: fixed height, bars live here only */
-.chart-bar-area{display:flex;gap:10px;align-items:flex-end;height:120px;border-bottom:2.5px solid var(--ink);border-left:2px solid var(--ink);padding:0 6px;margin-left:28px;overflow:hidden}
-.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
-.bar{border-radius:5px 5px 0 0;width:80%;min-height:3px;transition:height .5s cubic-bezier(.36,1.4,.6,1)}
-/* label row sits below the chart area */
-.chart-label-row{display:flex;gap:10px;margin-left:28px;padding:0 6px;margin-top:6px}
-.bar-lbl{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px}
-.bar-n{font-family:'Grandstander',cursive;font-size:12px;font-weight:900;text-align:center;color:var(--ink)}
-.bar-em{font-size:15px;line-height:1}
-.bar-name{font-size:9px;font-weight:700;color:var(--ink2);text-align:center;word-break:break-word}
-.y-axis{position:absolute;left:0;top:0;height:120px;display:flex;flex-direction:column-reverse;justify-content:space-between;width:26px}
-.y-lbl{font-size:10px;font-weight:700;color:#9CA3AF;text-align:right;padding-right:3px}
-
-/* ── Facts Panel ── */
-.facts-box{background:rgba(0,0,0,.02);border-radius:14px;padding:13px 15px;border:1.5px solid rgba(0,0,0,.06)}
-.fact-row{font-size:13px;font-weight:600;color:var(--ink);padding:5px 0;border-bottom:1px solid rgba(0,0,0,.05);display:flex;gap:6px;align-items:baseline}
-.fact-row:last-child{border-bottom:none}
-.fact-lbl{font-weight:800;color:var(--ac);white-space:nowrap}
-
-/* ── Reset ── */
-.btn{font-family:'Grandstander',cursive;font-size:14px;font-weight:800;padding:10px 20px;border-radius:14px;border:none;cursor:pointer;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-.btn:hover{transform:translateY(-1px)}
-.btn-g{background:#fff;color:var(--ink2);border:1.5px solid rgba(0,0,0,.1)}
-.btn-g:hover{border-color:var(--ac);color:var(--ac)}
-
-/* ── Quiz ── */
-.quiz-chart-box{background:rgba(0,0,0,.02);border-radius:14px;padding:14px;border:1.5px solid rgba(0,0,0,.06);margin-bottom:14px}
-.qct-title{font-size:11px;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
-.mini-bars{display:flex;gap:8px;align-items:flex-end;height:100px;border-bottom:2px solid var(--ink);border-left:1.5px solid var(--ink);padding:0 4px}
-.mini-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
-.mini-bar{border-radius:5px 5px 0 0;width:100%;min-height:4px;transition:height .4s cubic-bezier(.36,1.4,.6,1)}
-.mini-n{font-family:'Grandstander',cursive;font-size:12px;font-weight:900;min-height:16px;text-align:center}
-.mini-em{font-size:13px}
-.mini-name{font-size:9px;font-weight:700;color:var(--ink2);text-align:center;max-width:48px}
-.qQ{font-family:'Grandstander',cursive;font-size:15px;font-weight:800;margin-bottom:12px;color:var(--ink)}
+.cs{font-size:12px;color:var(--ink2);padding-left:14px;margin-bottom:14px;line-height:1.6}
+/* stepper */
+.cr{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.cg{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.03);border-radius:12px;padding:8px 12px;border:1.5px solid rgba(0,0,0,.06)}
+.cl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;min-width:48px}
+.sb{width:34px;height:34px;border-radius:50%;border:none;font-size:18px;font-weight:900;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.12s;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.sb:active{transform:scale(.88)}
+.sv{font-family:'Grandstander',cursive;font-size:28px;font-weight:900;min-width:28px;text-align:center}
+/* blocks */
+.bx{background:rgba(0,0,0,.02);border-radius:14px;border:1.5px solid rgba(0,0,0,.06);padding:12px;min-height:60px;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;margin-bottom:14px}
+.flat{display:grid;grid-template-columns:repeat(10,8px);gap:1px}.flat-c{width:8px;height:8px;border-radius:1px;opacity:.8}
+.rod{display:flex;flex-direction:column;gap:1px}.rod-c{width:10px;height:10px;border-radius:1px;opacity:.8}
+.units{display:flex;flex-wrap:wrap;gap:2px;max-width:58px;align-self:flex-end}.unit-c{width:10px;height:10px;border-radius:2px;opacity:.8}
+.sep{width:1px;background:#D1D5DB;align-self:stretch;margin:0 3px}
+/* options */
 .opts{display:flex;gap:8px;flex-wrap:wrap}
-.opt{font-family:'Grandstander',cursive;font-size:20px;font-weight:800;min-width:68px;height:52px;border-radius:14px;border:2.5px solid rgba(0,0,0,.08);background:#fff;cursor:pointer;color:var(--ink);display:flex;align-items:center;justify-content:center;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.05);padding:0 10px}
+.opt{font-family:'Grandstander',cursive;font-size:22px;font-weight:800;min-width:72px;height:54px;border-radius:16px;border:2.5px solid rgba(0,0,0,.08);background:#fff;cursor:pointer;color:var(--ink);display:flex;align-items:center;justify-content:center;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.05)}
 .opt:hover{border-color:var(--ac);transform:translateY(-2px)}
 .opt.ok{background:#DCFCE7;border-color:var(--ok);color:#15803D;animation:pop .3s}
 .opt.no{background:#FEE2E2;border-color:var(--no);color:var(--no);animation:shk .35s}
 @keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
 @keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-.fb{font-family:'Grandstander',cursive;font-size:14px;font-weight:700;min-height:20px;margin-top:10px}
+.fb{font-family:'Grandstander',cursive;font-size:14px;font-weight:700;min-height:20px;margin-top:10px;text-align:center}
 .nbtn{font-family:'Grandstander',cursive;font-size:14px;font-weight:800;padding:10px 24px;border-radius:14px;border:none;background:var(--ac);color:#fff;cursor:pointer;margin-top:12px;box-shadow:0 3px 10px rgba(0,0,0,.12);transition:.15s}
 .nbtn:hover{transform:translateY(-1px);opacity:.9}
+.btn{font-family:'Grandstander',cursive;font-size:14px;font-weight:800;padding:10px 20px;border-radius:14px;border:none;cursor:pointer;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.btn:hover{transform:translateY(-1px)}
+.btn-p{background:var(--ac);color:#fff}
+.btn-g{background:#fff;color:var(--ink2);border:1.5px solid rgba(0,0,0,.1)}
+.btn-g:hover{border-color:var(--ac);color:var(--ac)}
+.chal{background:rgba(0,0,0,.02);border-radius:16px;padding:14px;border:1.5px dashed rgba(0,0,0,.1);margin-top:10px}
+.chal-q{font-family:'Grandstander',cursive;font-size:14px;font-weight:800;margin-bottom:10px}
+.chal-q b{color:var(--ac);font-size:22px}
+canvas{display:block;border-radius:10px}
+/* drag & tap shared */
+.tappable{cursor:pointer;user-select:none;transition:transform .15s}
+.tappable:hover{transform:scale(1.08)}
+.tappable:active{transform:scale(.92)}
+/* misc */
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-block;font-family:'Grandstander',cursive;font-size:14px;font-weight:800;padding:6px 18px;border-radius:30px}
+.big{font-family:'Grandstander',cursive;font-weight:900;line-height:1;text-align:center}
 </style>
 </head>
 <body>
@@ -99,251 +71,208 @@ html,body{width:100%;min-height:100vh;font-family:'Poppins',sans-serif;backgroun
   <div class="ch-n">Chapter 13</div>
   <div class="ch-t">Data</div>
   <div class="tabs">
-    <div class="tab on" onclick="sw('learn')">Collect</div>
-    <div class="tab" onclick="sw('practice')">Read Charts</div>
+    <div class="tab on" onclick="sw('learn')">Learn</div>
+    <div class="tab" onclick="sw('practice')">Practice</div>
   </div>
 </div></div>
-
 <div class="page">
 
-  <!-- ── LEARN panel ── -->
-  <div class="pnl on" id="p-learn">
-
-    <div class="card"><div class="cb"></div>
-      <div class="ct">Vote for your favourite activity!</div>
-      <div class="cs">Tap ❤️ to add a vote for each activity. Watch the tally marks fill in and the bar chart update in real time.</div>
-      <div class="rating-grid" id="ratingGrid"></div>
-      <button class="btn btn-g" onclick="resetAll()" style="margin-bottom:16px">↺ Clear all votes</button>
-
-      <div class="chart-section">
-        <div class="chart-title">Bar chart</div>
-        <div class="chart-wrap">
-          <div class="y-axis" id="yAxis"></div>
-          <div class="chart-bar-area" id="chartBars"></div>
-          <div class="chart-label-row" id="chartLabels"></div>
-        </div>
-      </div>
-
-      <div class="facts-box" id="factsBox"></div>
+<div class="pnl on" id="p-learn">
+  <div class="card"><div class="cb"></div>
+    <div class="ct">Vote for your favourite activity</div>
+    <div class="cs">Tap ❤️ to add a vote. Watch the tally marks and bar chart update live.</div>
+    <div id="rGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px"></div>
+    <button class="btn btn-g" onclick="resetV()" style="margin-bottom:14px">↺ Clear all votes</button>
+    <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);margin-bottom:10px">Bar chart</div>
+    <div style="position:relative;margin-bottom:4px">
+      <div id="yAx" style="position:absolute;left:0;top:0;height:120px;display:flex;flex-direction:column-reverse;justify-content:space-between;width:26px"></div>
+      <!-- bar columns only — no labels here -->
+      <div id="chartB" style="display:flex;gap:8px;align-items:flex-end;height:120px;border-bottom:2.5px solid var(--ink);border-left:2px solid var(--ink);padding:0 6px;margin-left:28px;overflow:hidden"></div>
     </div>
-
+    <!-- label row sits entirely below the chart box -->
+    <div id="chartLbls" style="display:flex;gap:8px;margin-left:28px;padding:0 6px;margin-bottom:14px"></div>
+    <div id="factsB" style="background:rgba(0,0,0,.02);border-radius:14px;padding:13px 15px;border:1.5px solid rgba(0,0,0,.06)"></div>
   </div>
-
-  <!-- ── PRACTICE panel ── -->
-  <div class="pnl" id="p-practice">
-
-    <div class="card"><div class="cb"></div>
-      <div class="ct">Read the chart and answer</div>
-      <div class="cs">Look at the bar chart carefully. Each bar shows how many children chose that activity. Pick the correct answer.</div>
-      <div class="quiz-chart-box">
-        <div class="qct-title" id="qTitle">Bar chart</div>
-        <div class="mini-bars" id="quizBars"></div>
-      </div>
-      <div class="qQ" id="qQ">Loading…</div>
-      <div class="opts" id="qOpts"></div>
-      <div class="fb" id="qFb"></div>
-      <button class="nbtn" onclick="newQuiz()">Next question →</button>
+</div>
+<div class="pnl" id="p-practice">
+  <div class="card"><div class="cb"></div>
+    <div class="ct">Read the chart and answer</div>
+    <div class="cs">Each bar shows how many children chose that activity. Pick the correct answer.</div>
+    <div style="background:rgba(0,0,0,.02);border-radius:14px;padding:14px;border:1.5px solid rgba(0,0,0,.06);margin-bottom:14px">
+      <!-- quiz bar columns only -->
+      <div id="qBars" style="display:flex;gap:8px;align-items:flex-end;height:100px;border-bottom:2px solid var(--ink);border-left:1.5px solid var(--ink);padding:0 4px;overflow:hidden;margin-bottom:4px"></div>
+      <!-- quiz label row below -->
+      <div id="qLbls" style="display:flex;gap:8px;padding:0 4px"></div>
     </div>
-
+    <div style="font-family:Grandstander,cursive;font-size:15px;font-weight:800;margin-bottom:12px" id="qTxt">Loading…</div>
+    <div class="opts" id="qO"></div>
+    <div class="fb" id="qF"></div>
+    <button class="nbtn" onclick="nwQ13()">Next →</button>
   </div>
 </div>
 
+</div>
 <script>
-/* ── Tab switching ── */
-function sw(n){
-  document.querySelectorAll('.tab').forEach(function(t){
-    var names={'learn':'Collect','practice':'Read Charts'};
-    t.classList.toggle('on',t.textContent===names[n]);
-  });
-  document.querySelectorAll('.pnl').forEach(function(p){
-    var a=p.id==='p-'+n;p.classList.toggle('on',a);p.style.display=a?'flex':'none';
-  });
-}
+function sw(n){document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on',t.textContent.toLowerCase()===n)});document.querySelectorAll('.pnl').forEach(function(p){var a=p.id==='p-'+n;p.classList.toggle('on',a);p.style.display=a?'flex':'none'})}
 document.getElementById('p-practice').style.display='none';
+function pool4(ans,lo,hi){var s=new Set([ans]);var i=0;while(s.size<4&&i<50){i++;var w=ans+Math.round(Math.random()*8-4);if(w>=lo&&w<=hi&&w!==ans)s.add(w)}return[...s].sort(function(){return Math.random()-.5})}
+function mkOpts(cid,items,correct,fid){var c=document.getElementById(cid);c.innerHTML='';items.forEach(function(n){var b=document.createElement('button');b.className='opt';b.textContent=n;b.onclick=function(){c.querySelectorAll('.opt').forEach(function(x){x.onclick=null});var fb=document.getElementById(fid);if(String(n)===String(correct)){b.classList.add('ok');fb.textContent='🎉 Correct!';fb.style.color='var(--ok)'}else{b.classList.add('no');fb.textContent='The answer is '+correct+'.';fb.style.color='var(--no)';c.querySelectorAll('.opt').forEach(function(x){if(String(x.textContent)===String(correct))x.classList.add('ok')})}};c.appendChild(b)})}
 
-/* ── Data ── */
-const ITEMS=[
-  {name:'Reading',em:'📚'},{name:'Swimming',em:'🏊'},
-  {name:'Drawing',em:'🎨'},{name:'Football',em:'⚽'},{name:'Dancing',em:'💃'},
-];
-const BAR_COLORS=['#F59E0B','#3B82F6','#10B981','#EF4444','#8B5CF6'];
-let votes=ITEMS.map(()=>0);
+var ACTS=[{n:'Reading',e:'📚',c:'#D97706'},{n:'Swimming',e:'🏊',c:'#2563EB'},{n:'Drawing',e:'🎨',c:'#10B981'},{n:'Football',e:'⚽',c:'#EF4444'},{n:'Dancing',e:'💃',c:'#8B5CF6'}];
+var votes=ACTS.map(function(){return 0});
 
-/* ── Rating Grid ── */
-function buildGrid(){
-  const grid=document.getElementById('ratingGrid');grid.innerHTML='';
-  ITEMS.forEach(function(item,i){
-    const card=document.createElement('div');card.className='rating-card';
-    card.innerHTML=
-      '<div class="rc-emoji">'+item.em+'</div>'+
-      '<div class="rc-name">'+item.name+'</div>'+
-      '<div class="tally-zone" id="tally'+i+'">'+buildTallyHTML(votes[i],BAR_COLORS[i])+'</div>'+
-      '<div class="rc-num" id="num'+i+'">'+votes[i]+'</div>'+
-      '<div class="vote-row">'+
-        '<button class="heart-btn" onclick="addVote('+i+')">❤️</button>'+
-        '<button class="undo-sm" onclick="removeVote('+i+')">− Undo</button>'+
-      '</div>';
-    grid.appendChild(card);
+function bldG(){
+  var g=document.getElementById('rGrid');g.innerHTML='';
+  ACTS.forEach(function(a,i){
+    var d=document.createElement('div');
+    d.style.cssText='background:#fff;border:1.5px solid rgba(0,0,0,.07);border-radius:14px;padding:10px 4px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0';
+    d.innerHTML='<div style="font-size:26px;line-height:1">'+a.e+'</div>'
+      +'<div style="font-size:9px;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em;word-break:break-word">'+a.n+'</div>'
+      +'<div id="tly'+i+'" style="min-height:26px;display:flex;flex-wrap:wrap;gap:2px;justify-content:center;align-items:center;padding:0 2px;width:100%"></div>'
+      +'<div style="font-family:Grandstander,cursive;font-size:24px;font-weight:900;color:'+a.c+'" id="vn'+i+'">0</div>'
+      +'<button onclick="addV('+i+')" style="font-size:13px;cursor:pointer;background:'+a.c+';border:none;padding:5px 0;border-radius:7px;width:100%;color:#fff;font-weight:800;font-family:Grandstander,cursive">❤️ +1</button>'
+      +'<button onclick="subV('+i+')" style="font-size:10px;font-weight:700;background:#fff;border:1.5px solid rgba(0,0,0,.1);color:var(--ink2);border-radius:6px;padding:3px 0;cursor:pointer;width:100%">− undo</button>';
+    g.appendChild(d);
   });
 }
-function buildTallyHTML(n,col){
-  // Render proper tally marks: groups of 5 (4 vertical + 1 diagonal slash)
+
+/* SVG tally marks — proper groups of 5 */
+function mkTally(n,col){
+  if(!n) return '';
   var h='';
-  var groups=Math.floor(n/5);
-  var rem=n%5;
-  // Full groups of 5
-  for(var g=0;g<groups;g++){
-    h+='<svg width="24" height="24" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle">';
-    // 4 vertical lines
-    for(var v=0;v<4;v++){
-      h+='<line x1="'+(3+v*5)+'" y1="3" x2="'+(3+v*5)+'" y2="21" stroke="'+col+'" stroke-width="2.2" stroke-linecap="round"/>';
-    }
-    // diagonal slash
-    h+='<line x1="1" y1="21" x2="23" y2="3" stroke="#D97706" stroke-width="2.2" stroke-linecap="round"/>';
+  var grps=Math.floor(n/5); var rem=n%5;
+  for(var g=0;g<grps;g++){
+    h+='<svg width="22" height="22" viewBox="0 0 22 22" style="display:inline-block;vertical-align:middle">';
+    for(var v=0;v<4;v++) h+='<line x1="'+(3+v*4)+'" y1="2" x2="'+(3+v*4)+'" y2="20" stroke="'+col+'" stroke-width="2" stroke-linecap="round"/>';
+    h+='<line x1="1" y1="20" x2="21" y2="2" stroke="#DC2626" stroke-width="2" stroke-linecap="round"/></svg>';
+  }
+  if(rem){
+    var w=2+(rem-1)*4+5;
+    h+='<svg width="'+w+'" height="22" viewBox="0 0 '+w+' 22" style="display:inline-block;vertical-align:middle">';
+    for(var v=0;v<rem;v++) h+='<line x1="'+(3+v*4)+'" y1="2" x2="'+(3+v*4)+'" y2="20" stroke="'+col+'" stroke-width="2" stroke-linecap="round"/>';
     h+='</svg>';
   }
-  // Remaining vertical lines
-  if(rem>0){
-    var w=3+(rem-1)*5+3;
-    h+='<svg width="'+w+'" height="24" viewBox="0 0 '+w+' 24" style="display:inline-block;vertical-align:middle">';
-    for(var v=0;v<rem;v++){
-      h+='<line x1="'+(3+v*5)+'" y1="3" x2="'+(3+v*5)+'" y2="21" stroke="'+col+'" stroke-width="2.2" stroke-linecap="round"/>';
-    }
-    h+='</svg>';
-  }
-  return h||'<span style="font-size:10px;color:#ccc">–</span>';
-}
-function addVote(i){votes[i]=Math.min(votes[i]+1,12);refresh();}
-function removeVote(i){votes[i]=Math.max(votes[i]-1,0);refresh();}
-function resetAll(){votes=ITEMS.map(()=>0);refresh();}
-
-function refresh(){
-  ITEMS.forEach(function(_,i){
-    var tn=document.getElementById('tally'+i);if(tn)tn.innerHTML=buildTallyHTML(votes[i],BAR_COLORS[i]);
-    var nn=document.getElementById('num'+i);if(nn)nn.textContent=votes[i];
-  });
-  buildChart();buildFacts();
+  return h;
 }
 
-/* ── Bar Chart ── */
-function buildChart(){
-  var maxV=Math.max.apply(null,votes.concat([1]));var MAX_H=110;
-  var bars=document.getElementById('chartBars');bars.innerHTML='';
-  var lbls=document.getElementById('chartLabels');lbls.innerHTML='';
-  ITEMS.forEach(function(item,i){
-    // bar only in the bar area
-    var col=document.createElement('div');col.className='bar-col';
-    var barH=Math.round((votes[i]/maxV)*MAX_H);
-    col.innerHTML='<div class="bar" style="height:'+barH+'px;background:'+BAR_COLORS[i]+'"></div>';
-    bars.appendChild(col);
-    // labels below
-    var lbl=document.createElement('div');lbl.className='bar-lbl';
-    lbl.innerHTML=
-      '<div class="bar-n" style="color:'+BAR_COLORS[i]+'">'+(votes[i]||'0')+'</div>'+
-      '<div class="bar-em">'+item.em+'</div>'+
-      '<div class="bar-name">'+item.name+'</div>';
-    lbls.appendChild(lbl);
+function addV(i){votes[i]=Math.min(votes[i]+1,12);rfsh()}
+function subV(i){votes[i]=Math.max(votes[i]-1,0);rfsh()}
+function resetV(){votes=ACTS.map(function(){return 0});rfsh()}
+
+function rfsh(){
+  ACTS.forEach(function(_,i){
+    var t=document.getElementById('tly'+i);if(t)t.innerHTML=mkTally(votes[i],ACTS[i].c);
+    var n=document.getElementById('vn'+i);if(n)n.textContent=votes[i];
   });
-  var ya=document.getElementById('yAxis');ya.innerHTML='';
-  var step=Math.max(1,Math.ceil(maxV/4));
-  for(var y=0;y<=maxV;y+=step){
-    var d=document.createElement('div');d.className='y-lbl';d.textContent=y;ya.appendChild(d);
+  bldChart();bldFacts();
+}
+
+function bldChart(){
+  var mx=Math.max.apply(null,votes.concat([1]));
+  var MH=110;
+  var cb=document.getElementById('chartB');cb.innerHTML='';
+  var cl=document.getElementById('chartLbls');cl.innerHTML='';
+
+  ACTS.forEach(function(a,i){
+    /* bar only — no text inside bar area */
+    var bcol=document.createElement('div');
+    bcol.style.cssText='flex:1;display:flex;align-items:flex-end;justify-content:center;height:100%';
+    var bh=Math.round(votes[i]/mx*MH);
+    var bar=document.createElement('div');
+    bar.style.cssText='width:80%;border-radius:5px 5px 0 0;background:'+a.c+';height:'+bh+'px;min-height:3px;transition:height .5s cubic-bezier(.36,1.4,.6,1)';
+    bcol.appendChild(bar);cb.appendChild(bcol);
+
+    /* label row: count + emoji + name */
+    var lbl=document.createElement('div');
+    lbl.style.cssText='flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding-top:4px';
+    lbl.innerHTML='<div style="font-family:Grandstander,cursive;font-size:12px;font-weight:900;color:'+a.c+'">'+votes[i]+'</div>'
+      +'<div style="font-size:14px">'+a.e+'</div>'
+      +'<div style="font-size:9px;font-weight:700;color:var(--ink2);text-align:center;word-break:break-word">'+a.n+'</div>';
+    cl.appendChild(lbl);
+  });
+
+  var ya=document.getElementById('yAx');ya.innerHTML='';
+  var step=Math.max(1,Math.ceil(mx/4));
+  for(var y=0;y<=mx;y+=step){
+    var d=document.createElement('div');d.style.cssText='font-size:9px;font-weight:700;color:#9CA3AF;text-align:right;padding-right:3px';d.textContent=y;ya.appendChild(d);
   }
 }
 
-/* ── Facts ── */
-function buildFacts(){
-  var total=votes.reduce(function(a,b){return a+b},0);
-  var maxV=Math.max.apply(null,votes);var minV=Math.min.apply(null,votes);
-  var most=ITEMS.filter(function(_,i){return votes[i]===maxV});
-  var least=ITEMS.filter(function(_,i){return votes[i]===minV});
-  var fb=document.getElementById('factsBox');
-  if(!total){fb.innerHTML='<div class="fact-row">Add some votes to see the data summary.</div>';return;}
-  fb.innerHTML=
-    '<div class="fact-row"><span class="fact-lbl">Total votes</span>'+total+'</div>'+
-    '<div class="fact-row"><span class="fact-lbl">Most popular</span>'+most.map(function(m){return m.em+' '+m.name}).join(', ')+' ('+maxV+')</div>'+
-    '<div class="fact-row"><span class="fact-lbl">Least popular</span>'+least.map(function(m){return m.em+' '+m.name}).join(', ')+' ('+minV+')</div>'+
-    '<div class="fact-row"><span class="fact-lbl">Difference (most − least)</span>'+(maxV-minV)+'</div>';
+function bldFacts(){
+  var tot=votes.reduce(function(a,b){return a+b},0);
+  var mx=Math.max.apply(null,votes); var mn=Math.min.apply(null,votes);
+  var fb=document.getElementById('factsB');
+  if(!tot){fb.innerHTML='<div style="font-size:13px;font-weight:600;color:var(--ink2)">Add some votes to see data facts.</div>';return}
+  var most=ACTS.filter(function(_,i){return votes[i]===mx}).map(function(a){return a.e+' '+a.n}).join(', ');
+  var least=ACTS.filter(function(_,i){return votes[i]===mn}).map(function(a){return a.e+' '+a.n}).join(', ');
+  function fr(lbl,val){return'<div style="font-size:13px;font-weight:600;color:var(--ink);padding:5px 0;border-bottom:1px solid rgba(0,0,0,.05);display:flex;gap:6px"><b style="color:var(--ac);white-space:nowrap">'+lbl+'</b>'+val+'</div>'}
+  fb.innerHTML=fr('Total votes',tot)+fr('Most popular',most+' ('+mx+')')+fr('Least popular',least+' ('+mn+')')+fr('Difference',mx-mn);
 }
 
-buildGrid();buildChart();buildFacts();
+bldG();bldChart();bldFacts();
 
-/* ── Quiz ── */
-function newQuiz(){
-  var qVotes=ITEMS.map(function(){return Math.floor(Math.random()*8)+1});
-  var maxV=Math.max.apply(null,qVotes);var maxH=80;
-  document.getElementById('qFb').textContent='';
+/* Quiz */
+var qVotes=[];
+function nwQ13(){
+  qVotes=ACTS.map(function(){return Math.floor(Math.random()*8)+1});
+  var mx=Math.max.apply(null,qVotes); var MH=90;
+  document.getElementById('qF').textContent='';
 
-  var bars=document.getElementById('quizBars');bars.innerHTML='';
-  ITEMS.forEach(function(item,i){
-    var col=document.createElement('div');col.className='mini-col';
-    var bH=Math.round((qVotes[i]/maxV)*maxH);
-    col.innerHTML=
-      '<div class="mini-n" style="color:'+BAR_COLORS[i]+'">'+qVotes[i]+'</div>'+
-      '<div class="mini-bar" style="height:'+bH+'px;background:'+BAR_COLORS[i]+'"></div>'+
-      '<div class="mini-em">'+item.em+'</div>'+
-      '<div class="mini-name">'+item.name+'</div>';
-    bars.appendChild(col);
+  var qb=document.getElementById('qBars');qb.innerHTML='';
+  var ql=document.getElementById('qLbls');ql.innerHTML='';
+
+  ACTS.forEach(function(a,i){
+    /* bar only inside the chart box */
+    var bcol=document.createElement('div');
+    bcol.style.cssText='flex:1;display:flex;align-items:flex-end;justify-content:center;height:100%';
+    var bh=Math.round(qVotes[i]/mx*MH);
+    var bar=document.createElement('div');
+    bar.style.cssText='width:80%;border-radius:5px 5px 0 0;background:'+a.c+';height:'+bh+'px;min-height:3px';
+    bcol.appendChild(bar);qb.appendChild(bcol);
+
+    /* label row below chart box */
+    var lbl=document.createElement('div');
+    lbl.style.cssText='flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding-top:4px';
+    lbl.innerHTML='<div style="font-family:Grandstander,cursive;font-size:12px;font-weight:900;color:'+a.c+'">'+qVotes[i]+'</div>'
+      +'<div style="font-size:13px">'+a.e+'</div>'
+      +'<div style="font-size:8px;font-weight:700;color:var(--ink2);text-align:center">'+a.n+'</div>';
+    ql.appendChild(lbl);
   });
 
-  var qType=['most','least','howmany','diff'][Math.floor(Math.random()*4)];
-  var qText,ans,ansNum;
-  var mostIdx=qVotes.indexOf(maxV);
-  var leastIdx=qVotes.indexOf(Math.min.apply(null,qVotes));
+  var mostI=qVotes.indexOf(mx);
+  var leastI=qVotes.indexOf(Math.min.apply(null,qVotes));
+  var qt=['most','least','howmany','diff'][Math.floor(Math.random()*4)];
+  var qTxt,ans,ansN;
+  if(qt==='most'){qTxt='Which activity got the most votes?';ans=ACTS[mostI].e+' '+ACTS[mostI].n;ansN=mostI}
+  else if(qt==='least'){qTxt='Which activity got the fewest votes?';ans=ACTS[leastI].e+' '+ACTS[leastI].n;ansN=leastI}
+  else if(qt==='howmany'){var idx=Math.floor(Math.random()*ACTS.length);qTxt='How many children chose '+ACTS[idx].e+' '+ACTS[idx].n+'?';ans=''+qVotes[idx];ansN=qVotes[idx]}
+  else{qTxt='How many more votes did '+ACTS[mostI].e+' get than '+ACTS[leastI].e+'?';ans=''+(qVotes[mostI]-qVotes[leastI]);ansN=qVotes[mostI]-qVotes[leastI]}
+  document.getElementById('qTxt').textContent=qTxt;
 
-  if(qType==='most'){
-    qText='Which activity got the most votes?';ans=ITEMS[mostIdx].em+' '+ITEMS[mostIdx].name;ansNum=mostIdx;
-  } else if(qType==='least'){
-    qText='Which activity got the fewest votes?';ans=ITEMS[leastIdx].em+' '+ITEMS[leastIdx].name;ansNum=leastIdx;
-  } else if(qType==='howmany'){
-    var idx=Math.floor(Math.random()*ITEMS.length);
-    qText='How many children chose '+ITEMS[idx].em+' '+ITEMS[idx].name+'?';ans=''+qVotes[idx];ansNum=qVotes[idx];
-  } else {
-    qText='How many more votes did '+ITEMS[mostIdx].em+' '+ITEMS[mostIdx].name+' get than '+ITEMS[leastIdx].em+' '+ITEMS[leastIdx].name+'?';
-    ans=''+(qVotes[mostIdx]-qVotes[leastIdx]);ansNum=qVotes[mostIdx]-qVotes[leastIdx];
-  }
-  document.getElementById('qQ').textContent=qText;
-  document.getElementById('qTitle').textContent='Bar chart';
-
-  var opts=document.getElementById('qOpts');opts.innerHTML='';
-  if(qType==='most'||qType==='least'){
-    var pool=ITEMS.map(function(item,i){return{txt:item.em+' '+item.name,correct:i===ansNum}});
-    pool.sort(function(){return Math.random()-.5});
+  var op=document.getElementById('qO');op.innerHTML='';
+  if(qt==='most'||qt==='least'){
+    var pool=ACTS.map(function(a,i){return{txt:a.e+' '+a.n,ok:i===ansN}}).sort(function(){return Math.random()-.5});
     pool.forEach(function(p){
-      var b=document.createElement('button');b.className='opt';
-      b.style.fontSize='13px';b.style.minWidth='auto';b.style.padding='0 10px';b.textContent=p.txt;
-      b.onclick=function(){
-        opts.querySelectorAll('.opt').forEach(function(x){x.onclick=null});
-        var fb=document.getElementById('qFb');
-        if(p.correct){
-          b.classList.add('ok');fb.textContent='🎉 Correct! '+p.txt+' got the '+(qType==='most'?'most':'fewest')+' votes.';fb.style.color='var(--ok)';
-        } else {
-          b.classList.add('no');fb.textContent='Look at the '+(qType==='most'?'tallest':'shortest')+' bar! The answer is '+ans+'.';fb.style.color='var(--no)';
-          opts.querySelectorAll('.opt').forEach(function(x){if(x.textContent===ans)x.classList.add('ok');});
-        }
-      };
-      opts.appendChild(b);
+      var b=document.createElement('button');b.className='opt';b.style.fontSize='12px';b.style.minWidth='auto';b.style.padding='0 10px';b.textContent=p.txt;
+      b.onclick=function(){op.querySelectorAll('.opt').forEach(function(x){x.onclick=null});var fb=document.getElementById('qF');
+        if(p.ok){b.classList.add('ok');fb.textContent='🎉 Correct!';fb.style.color='var(--ok)'}
+        else{b.classList.add('no');fb.textContent='The answer is '+ans+'.';fb.style.color='var(--no)';op.querySelectorAll('.opt').forEach(function(x){if(x.textContent===ans)x.classList.add('ok')})}};
+      op.appendChild(b);
     });
   } else {
-    var pool=new Set([ansNum]);var safety=0;
-    while(pool.size<4&&safety<50){safety++;var w=ansNum+[-2,-1,1,2][Math.floor(Math.random()*4)];if(w>0&&w<=20)pool.add(w);}
+    var num=parseInt(ans);var pool=new Set([num]);var t=0;
+    while(pool.size<4&&t<40){t++;var w=num+[-2,-1,1,2][Math.floor(Math.random()*4)];if(w>0&&w<=20)pool.add(w)}
     [...pool].sort(function(){return Math.random()-.5}).forEach(function(n){
       var b=document.createElement('button');b.className='opt';b.textContent=n;
-      b.onclick=function(){
-        opts.querySelectorAll('.opt').forEach(function(x){x.onclick=null});
-        var fb=document.getElementById('qFb');
-        if(n===ansNum){
-          b.classList.add('ok');fb.textContent='🎉 Correct! The answer is '+ansNum+'.';fb.style.color='var(--ok)';
-        } else {
-          b.classList.add('no');fb.textContent='Look carefully at the bar chart. The answer is '+ansNum+'.';fb.style.color='var(--no)';
-          opts.querySelectorAll('.opt').forEach(function(x){if(parseInt(x.textContent)===ansNum)x.classList.add('ok');});
-        }
-      };
-      opts.appendChild(b);
+      b.onclick=function(){op.querySelectorAll('.opt').forEach(function(x){x.onclick=null});var fb=document.getElementById('qF');
+        if(n===num){b.classList.add('ok');fb.textContent='🎉 Correct! '+num;fb.style.color='var(--ok)'}
+        else{b.classList.add('no');fb.textContent='The answer is '+num+'.';fb.style.color='var(--no)';op.querySelectorAll('.opt').forEach(function(x){if(parseInt(x.textContent)===num)x.classList.add('ok')})}};
+      op.appendChild(b);
     });
   }
 }
-newQuiz();
+nwQ13();
+
 </script>
 </body>
 </html>
