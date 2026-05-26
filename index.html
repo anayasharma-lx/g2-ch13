@@ -4,230 +4,314 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chapter 13 · Data</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@500;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--grass:#2D6A4F;--leaf:#52B788;--soil:#8B4513;--sky:#87CEEB;--sun:#FFD93D;--pink:#FF6B9D;--blue:#4A9EFF;--purple:#9B5DE5;--orange:#FF8C42;--red:#FF4040;--cream:#FFFEF5}
-html,body{width:100%;min-height:100vh}
-body{font-family:'Nunito',sans-serif;background:linear-gradient(180deg,#B8E8FF 0%,#87CEEB 25%,#A8D8A8 55%,#52B788 100%);min-height:100vh;padding:0 0 32px;display:flex;flex-direction:column;align-items:center;}
+:root{--ac:#059669;--bg:#FDF6EE;--card:#fff;--ink:#1A2E22;--ink2:#5F7A6A;--ok:#16A34A;--no:#DC2626;--r:20px}
+html,body{width:100%;min-height:100vh;font-family:'Poppins',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
 
-.garden-header{width:100%;background:linear-gradient(135deg,#1B4332,#2D6A4F);padding:14px 20px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:4px solid var(--leaf);position:relative;overflow:hidden}
-.flower-strip{position:absolute;bottom:0;left:0;right:0;height:20px;display:flex;justify-content:space-around;align-items:flex-end;padding:0 10px}
-.mini-flower{font-size:16px;line-height:1}
-.gh-title{font-family:'Fredoka One',cursive;font-size:26px;color:var(--sun);z-index:1;text-shadow:0 2px 0 rgba(0,0,0,.3)}
-.gh-chip{background:var(--pink);color:#fff;font-size:12px;font-weight:900;padding:5px 14px;border-radius:20px;z-index:1;border:2px solid rgba(255,255,255,.2)}
+/* ── Header ── */
+.hdr{width:100%;position:sticky;top:0;z-index:100;background:var(--ac);box-shadow:0 4px 24px rgba(0,0,0,.15)}
+.hdr-in{max-width:640px;margin:0 auto;padding:14px 20px 0;text-align:center}
+.ch-n{font-family:'Grandstander',cursive;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.65)}
+.ch-t{font-family:'Grandstander',cursive;font-size:clamp(18px,5vw,26px);font-weight:900;color:#fff;line-height:1.2;margin:2px 0 10px;text-shadow:0 2px 8px rgba(0,0,0,.1)}
+.tabs{display:flex;gap:4px;max-width:280px;margin:0 auto;background:rgba(0,0,0,.1);border-radius:14px 14px 0 0;padding:4px 4px 0}
+.tab{flex:1;padding:9px 0;text-align:center;font-family:'Grandstander',cursive;font-size:14px;font-weight:800;cursor:pointer;border-radius:12px 12px 0 0;color:rgba(255,255,255,.6);transition:.2s;user-select:none}
+.tab.on{background:var(--bg);color:var(--ac)}
+.tab:not(.on):hover{color:#fff;background:rgba(255,255,255,.08)}
 
-.page{width:100%;max-width:720px;padding:16px;display:flex;flex-direction:column;gap:20px}
-.gcard{background:rgba(255,254,245,.97);border-radius:24px;padding:20px;box-shadow:0 6px 0 rgba(0,0,0,.12),0 2px 20px rgba(0,0,0,.1);border:3px solid rgba(255,255,255,.9);position:relative;overflow:hidden}
-.gcard::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;border-radius:24px 24px 0 0}
-.gcard.pink::before{background:var(--pink)}.gcard.leaf::before{background:var(--leaf)}.gcard.blue::before{background:var(--blue)}
-.gc-title{font-family:'Fredoka One',cursive;font-size:20px;color:var(--grass);margin-bottom:4px}
-.hint{font-size:13px;font-weight:700;color:var(--grass);margin-bottom:14px;line-height:1.5}
+/* ── Layout ── */
+.page{max-width:620px;margin:0 auto;padding:14px 14px 60px}
+.pnl{display:none;flex-direction:column;gap:16px}.pnl.on{display:flex}
+.card{background:var(--card);border-radius:var(--r);padding:20px 18px;box-shadow:0 3px 16px rgba(0,0,0,.06);position:relative;overflow:hidden}
+.cb{position:absolute;top:0;left:0;bottom:0;width:5px;border-radius:var(--r) 0 0 var(--r);background:var(--ac)}
+.ct{font-family:'Grandstander',cursive;font-size:15px;font-weight:800;padding-left:14px;margin-bottom:3px;line-height:1.3}
+.cs{font-size:12px;color:var(--ink2);padding-left:14px;margin-bottom:16px;line-height:1.6}
 
-/* Rating cards */
-.rating-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px}
-.rating-card{border-radius:16px;padding:12px 8px;text-align:center;border:2.5px solid transparent;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:5px}
-.rc0{background:#FEF3C7;border-color:#FDE68A}.rc1{background:#DBEAFE;border-color:#BAE6FD}.rc2{background:#D1FAE5;border-color:#A7F3D0}.rc3{background:#FEE2E2;border-color:#FECACA}.rc4{background:#EDE9FE;border-color:#DDD6FE}
-.rc-emoji{font-size:38px;line-height:1}
-.rc-name{font-size:13px;font-weight:800;color:var(--grass)}
-/* Tally marks */
-.tally-zone{min-height:28px;display:flex;flex-wrap:wrap;gap:2px;justify-content:center;align-items:flex-end;margin:4px 0}
-.tmark{display:inline-block;width:5px;height:22px;border-radius:3px;margin:0 1px;vertical-align:middle;transition:all .2s;background:#2D6A4F}
-.tmark.diag{transform:rotate(25deg);margin-left:-7px;background:#FF6B6B}
-.rc-num{font-family:'Fredoka One',cursive;font-size:32px;color:var(--grass);line-height:1}
-.heart-btn{font-size:30px;cursor:pointer;background:none;border:none;padding:4px;border-radius:12px;transition:all .15s;line-height:1}
-.heart-btn:hover{transform:scale(1.25)}
+/* ── Rating Grid ── */
+.rating-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-bottom:16px}
+.rating-card{border-radius:14px;padding:12px 8px;text-align:center;border:2px solid rgba(0,0,0,.07);background:#fff;display:flex;flex-direction:column;align-items:center;gap:5px;transition:box-shadow .15s}
+.rating-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.rc-emoji{font-size:36px;line-height:1}
+.rc-name{font-size:12px;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em}
+.tally-zone{min-height:26px;display:flex;flex-wrap:wrap;gap:1px;justify-content:center;align-items:flex-end;margin:4px 0}
+.tmark{display:inline-block;width:4px;height:20px;border-radius:2px;margin:0 1px;vertical-align:middle;background:var(--ac);transition:all .2s}
+.tmark.diag{transform:rotate(28deg);margin-left:-6px;background:#D97706}
+.rc-num{font-family:'Grandstander',cursive;font-size:30px;font-weight:900;color:var(--ink);line-height:1}
+.vote-row{display:flex;gap:6px;align-items:center;justify-content:center}
+.heart-btn{font-size:22px;cursor:pointer;background:none;border:2px solid rgba(0,0,0,.08);padding:4px 8px;border-radius:10px;transition:all .15s;line-height:1}
+.heart-btn:hover{border-color:var(--ac);transform:scale(1.12)}
 .heart-btn:active{transform:scale(.9)}
-.undo-sm{font-size:12px;font-weight:800;background:rgba(255,255,255,.6);border:1.5px solid rgba(0,0,0,.12);color:var(--grass);border-radius:8px;padding:3px 8px;cursor:pointer;font-family:'Nunito',sans-serif}
+.undo-sm{font-size:11px;font-weight:700;background:#fff;border:1.5px solid rgba(0,0,0,.1);color:var(--ink2);border-radius:8px;padding:3px 8px;cursor:pointer;font-family:'Poppins',sans-serif;transition:all .12s}
+.undo-sm:hover{border-color:var(--no);color:var(--no)}
 
-/* Bar chart */
-.chart-wrap{position:relative;margin-bottom:16px}
-.chart-bars{display:flex;gap:10px;align-items:flex-end;height:140px;border-bottom:3px solid var(--grass);border-left:2.5px solid var(--grass);padding:0 6px;margin-left:28px}
+/* ── Bar Chart ── */
+.chart-section{background:rgba(0,0,0,.02);border:1.5px solid rgba(0,0,0,.06);border-radius:16px;padding:14px;margin-bottom:14px}
+.chart-title{font-family:'Grandstander',cursive;font-size:13px;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.chart-wrap{position:relative}
+.chart-bars{display:flex;gap:10px;align-items:flex-end;height:130px;border-bottom:2.5px solid var(--ink);border-left:2px solid var(--ink);padding:0 6px;margin-left:28px}
 .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
-.bar{border-radius:8px 8px 0 0;width:100%;min-height:4px;transition:height .5s cubic-bezier(.36,1.4,.6,1)}
-.bar-n{font-family:'Fredoka One',cursive;font-size:14px;min-height:18px}
-.bar-em{font-size:18px}
-.bar-name{font-size:10px;font-weight:800;color:var(--grass);text-align:center;max-width:60px;word-break:break-word}
-.y-axis{position:absolute;left:0;top:0;height:140px;display:flex;flex-direction:column-reverse;justify-content:space-between;width:26px}
-.y-lbl{font-size:10px;font-weight:800;color:#9CA3AF;text-align:right;padding-right:3px}
+.bar{border-radius:6px 6px 0 0;width:100%;min-height:4px;transition:height .5s cubic-bezier(.36,1.4,.6,1)}
+.bar-n{font-family:'Grandstander',cursive;font-size:13px;font-weight:900;min-height:18px;text-align:center}
+.bar-em{font-size:16px}
+.bar-name{font-size:10px;font-weight:700;color:var(--ink2);text-align:center;max-width:60px;word-break:break-word}
+.y-axis{position:absolute;left:0;top:0;height:130px;display:flex;flex-direction:column-reverse;justify-content:space-between;width:26px}
+.y-lbl{font-size:10px;font-weight:700;color:#9CA3AF;text-align:right;padding-right:3px}
 
-/* Reset row */
-.reset-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-.reset-btn{background:#fff;border:2.5px solid #A7F3D0;color:var(--grass);font-family:'Fredoka One',cursive;font-size:14px;padding:8px 18px;border-radius:12px;cursor:pointer}
-
-/* Facts panel */
-.facts-box{background:#F0FFF0;border-radius:14px;padding:13px 15px;border:2.5px solid #A7F3D0;margin-top:4px}
-.fact-row{font-size:14px;font-weight:700;color:var(--grass);padding:5px 0;border-bottom:1px solid #D1FAE5}
+/* ── Facts Panel ── */
+.facts-box{background:rgba(0,0,0,.02);border-radius:14px;padding:13px 15px;border:1.5px solid rgba(0,0,0,.06)}
+.fact-row{font-size:13px;font-weight:600;color:var(--ink);padding:5px 0;border-bottom:1px solid rgba(0,0,0,.05);display:flex;gap:6px;align-items:baseline}
 .fact-row:last-child{border-bottom:none}
-.fact-lbl{font-weight:900;color:var(--leaf)}
+.fact-lbl{font-weight:800;color:var(--ac);white-space:nowrap}
 
-/* Quiz */
-.quiz-chart-box{background:#F0FFF0;border-radius:12px;padding:14px;border:2.5px solid #A7F3D0;margin-bottom:12px}
-.qct-title{font-size:12px;font-weight:800;color:var(--grass);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
-.mini-bars{display:flex;gap:6px;align-items:flex-end;height:100px;border-bottom:2.5px solid var(--grass);border-left:2px solid var(--grass);padding:0 4px}
+/* ── Reset ── */
+.btn{font-family:'Grandstander',cursive;font-size:14px;font-weight:800;padding:10px 20px;border-radius:14px;border:none;cursor:pointer;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.btn:hover{transform:translateY(-1px)}
+.btn-g{background:#fff;color:var(--ink2);border:1.5px solid rgba(0,0,0,.1)}
+.btn-g:hover{border-color:var(--ac);color:var(--ac)}
+
+/* ── Quiz ── */
+.quiz-chart-box{background:rgba(0,0,0,.02);border-radius:14px;padding:14px;border:1.5px solid rgba(0,0,0,.06);margin-bottom:14px}
+.qct-title{font-size:11px;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.mini-bars{display:flex;gap:8px;align-items:flex-end;height:100px;border-bottom:2px solid var(--ink);border-left:1.5px solid var(--ink);padding:0 4px}
 .mini-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
-.mini-bar{border-radius:6px 6px 0 0;width:100%;min-height:4px;transition:height .4s}
-.mini-n{font-family:'Fredoka One',cursive;font-size:13px;min-height:16px}
-.mini-em{font-size:14px}
-.mini-name{font-size:9px;font-weight:800;color:var(--grass);text-align:center;max-width:48px}
+.mini-bar{border-radius:5px 5px 0 0;width:100%;min-height:4px;transition:height .4s cubic-bezier(.36,1.4,.6,1)}
+.mini-n{font-family:'Grandstander',cursive;font-size:12px;font-weight:900;min-height:16px;text-align:center}
+.mini-em{font-size:13px}
+.mini-name{font-size:9px;font-weight:700;color:var(--ink2);text-align:center;max-width:48px}
+.qQ{font-family:'Grandstander',cursive;font-size:15px;font-weight:800;margin-bottom:12px;color:var(--ink)}
 .opts{display:flex;gap:8px;flex-wrap:wrap}
-.opt{font-family:'Fredoka One',cursive;font-size:20px;min-width:64px;height:50px;border-radius:12px;border:3px solid #A7F3D0;background:#fff;cursor:pointer;color:var(--grass);transition:all .14s;padding:0 10px;box-shadow:0 3px 0 rgba(0,0,0,.08)}
-.opt:hover{border-color:var(--leaf);transform:scale(1.06);background:#F0FFF0}
-.opt.correct{background:#D1FAE5;border-color:var(--leaf);color:var(--grass)}
-.opt.wrong{background:#FFE0E0;border-color:var(--red);color:var(--red)}
-.quiz-fb{font-family:'Fredoka One',cursive;font-size:17px;min-height:22px;margin-top:10px}
-.next-btn{margin-top:12px;background:linear-gradient(135deg,var(--leaf),var(--grass));color:#fff;border:none;border-radius:16px;padding:12px 28px;font-family:'Fredoka One',cursive;font-size:17px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.12);transition:all .18s}
-.next-btn:hover{transform:scale(1.06)}
+.opt{font-family:'Grandstander',cursive;font-size:20px;font-weight:800;min-width:68px;height:52px;border-radius:14px;border:2.5px solid rgba(0,0,0,.08);background:#fff;cursor:pointer;color:var(--ink);display:flex;align-items:center;justify-content:center;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.05);padding:0 10px}
+.opt:hover{border-color:var(--ac);transform:translateY(-2px)}
+.opt.ok{background:#DCFCE7;border-color:var(--ok);color:#15803D;animation:pop .3s}
+.opt.no{background:#FEE2E2;border-color:var(--no);color:var(--no);animation:shk .35s}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.fb{font-family:'Grandstander',cursive;font-size:14px;font-weight:700;min-height:20px;margin-top:10px}
+.nbtn{font-family:'Grandstander',cursive;font-size:14px;font-weight:800;padding:10px 24px;border-radius:14px;border:none;background:var(--ac);color:#fff;cursor:pointer;margin-top:12px;box-shadow:0 3px 10px rgba(0,0,0,.12);transition:.15s}
+.nbtn:hover{transform:translateY(-1px);opacity:.9}
 </style>
 </head>
 <body>
-<div class="garden-header">
-  <div class="flower-strip" id="flowerStrip"></div>
-  <div class="gh-title">📊 Data</div>
-  <div class="gh-chip">Chapter 13</div>
-</div>
+<div class="hdr"><div class="hdr-in">
+  <div class="ch-n">Chapter 13</div>
+  <div class="ch-t">Data</div>
+  <div class="tabs">
+    <div class="tab on" onclick="sw('learn')">Collect</div>
+    <div class="tab" onclick="sw('practice')">Read Charts</div>
+  </div>
+</div></div>
+
 <div class="page">
 
-  <div class="gcard pink">
-    <div class="gc-title">❤️ Rate these activities!</div>
-    <div class="hint">Tap the ❤️ button to add hearts for each activity. Watch the tally marks appear and the bar chart grow!</div>
-    <div class="rating-grid" id="ratingGrid"></div>
-    <div class="reset-row">
-      <button class="reset-btn" onclick="resetAll()">🗑 Clear all votes</button>
+  <!-- ── LEARN panel ── -->
+  <div class="pnl on" id="p-learn">
+
+    <div class="card"><div class="cb"></div>
+      <div class="ct">Vote for your favourite activity!</div>
+      <div class="cs">Tap ❤️ to add a vote for each activity. Watch the tally marks fill in and the bar chart update in real time.</div>
+      <div class="rating-grid" id="ratingGrid"></div>
+      <button class="btn btn-g" onclick="resetAll()" style="margin-bottom:16px">↺ Clear all votes</button>
+
+      <div class="chart-section">
+        <div class="chart-title">Bar chart</div>
+        <div class="chart-wrap">
+          <div class="y-axis" id="yAxis"></div>
+          <div class="chart-bars" id="chartBars"></div>
+        </div>
+      </div>
+
+      <div class="facts-box" id="factsBox"></div>
     </div>
 
-    <!-- Bar chart -->
-    <div style="font-family:'Fredoka One',cursive;font-size:15px;color:var(--grass);margin-bottom:10px">Your bar chart:</div>
-    <div class="chart-wrap">
-      <div class="y-axis" id="yAxis"></div>
-      <div class="chart-bars" id="chartBars"></div>
-    </div>
-
-    <!-- Facts -->
-    <div class="facts-box" id="factsBox"></div>
   </div>
 
-  <div class="gcard blue">
-    <div class="gc-title">🔍 Read the chart and answer!</div>
-    <div class="hint">Look at the bar chart. Each bar shows how many children chose that activity. Pick the right answer!</div>
-    <div class="quiz-chart-box">
-      <div class="qct-title" id="qTitle">Which activity did most children choose?</div>
-      <div style="display:flex;gap:8px;align-items:flex-end;height:100px;border-bottom:2.5px solid var(--grass);border-left:2px solid var(--grass);padding:0 4px" id="quizBars"></div>
-    </div>
-    <div style="font-family:'Fredoka One',cursive;font-size:16px;color:var(--grass);margin-bottom:8px" id="qQ">Loading…</div>
-    <div class="opts" id="qOpts"></div>
-    <div class="quiz-fb" id="qFb"></div>
-    <button class="next-btn" onclick="newQuiz()">New question ➡️</button>
-  </div>
+  <!-- ── PRACTICE panel ── -->
+  <div class="pnl" id="p-practice">
 
+    <div class="card"><div class="cb"></div>
+      <div class="ct">Read the chart and answer</div>
+      <div class="cs">Look at the bar chart carefully. Each bar shows how many children chose that activity. Pick the correct answer.</div>
+      <div class="quiz-chart-box">
+        <div class="qct-title" id="qTitle">Bar chart</div>
+        <div class="mini-bars" id="quizBars"></div>
+      </div>
+      <div class="qQ" id="qQ">Loading…</div>
+      <div class="opts" id="qOpts"></div>
+      <div class="fb" id="qFb"></div>
+      <button class="nbtn" onclick="newQuiz()">Next question →</button>
+    </div>
+
+  </div>
 </div>
-<script>
-/* Flower strip */
-const FLOWERS=['🌸','🌻','🌺','🌷','🌼','🌹','🌸','🌻','🌺','🌷','🌼','🌹','🌸','🌻'];
-const fs=document.getElementById('flowerStrip');FLOWERS.forEach(f=>{const s=document.createElement('span');s.className='mini-flower';s.textContent=f;fs.appendChild(s);});
 
+<script>
+/* ── Tab switching ── */
+function sw(n){
+  document.querySelectorAll('.tab').forEach(function(t){
+    var names={'learn':'Collect','practice':'Read Charts'};
+    t.classList.toggle('on',t.textContent===names[n]);
+  });
+  document.querySelectorAll('.pnl').forEach(function(p){
+    var a=p.id==='p-'+n;p.classList.toggle('on',a);p.style.display=a?'flex':'none';
+  });
+}
+document.getElementById('p-practice').style.display='none';
+
+/* ── Data ── */
 const ITEMS=[
-  {name:'Reading',em:'📚',col:'#D97706'},{name:'Swimming',em:'🏊',col:'#2563EB'},
-  {name:'Drawing',em:'🎨',col:'#16A34A'},{name:'Football',em:'⚽',col:'#DC2626'},{name:'Dancing',em:'💃',col:'#7C3AED'},
+  {name:'Reading',em:'📚'},{name:'Swimming',em:'🏊'},
+  {name:'Drawing',em:'🎨'},{name:'Football',em:'⚽'},{name:'Dancing',em:'💃'},
 ];
-const BAR_COLORS=['#FFA94D','#74C0FC','#69DB7C','#FF8787','#CC5DE8'];
+const BAR_COLORS=['#F59E0B','#3B82F6','#10B981','#EF4444','#8B5CF6'];
 let votes=ITEMS.map(()=>0);
 
+/* ── Rating Grid ── */
 function buildGrid(){
   const grid=document.getElementById('ratingGrid');grid.innerHTML='';
-  ITEMS.forEach((item,i)=>{
-    const card=document.createElement('div');card.className='rating-card rc'+i;
-    // tally
-    const tallyHTML=buildTallyHTML(votes[i],BAR_COLORS[i]);
-    card.innerHTML=`<div class="rc-emoji">${item.em}</div><div class="rc-name">${item.name}</div><div class="tally-zone" id="tally${i}">${tallyHTML}</div><div class="rc-num" id="num${i}">${votes[i]}</div><button class="heart-btn" onclick="addVote(${i})">❤️</button><button class="undo-sm" onclick="removeVote(${i})">− Undo</button>`;
+  ITEMS.forEach(function(item,i){
+    const card=document.createElement('div');card.className='rating-card';
+    card.innerHTML=
+      '<div class="rc-emoji">'+item.em+'</div>'+
+      '<div class="rc-name">'+item.name+'</div>'+
+      '<div class="tally-zone" id="tally'+i+'">'+buildTallyHTML(votes[i],BAR_COLORS[i])+'</div>'+
+      '<div class="rc-num" id="num'+i+'">'+votes[i]+'</div>'+
+      '<div class="vote-row">'+
+        '<button class="heart-btn" onclick="addVote('+i+')">❤️</button>'+
+        '<button class="undo-sm" onclick="removeVote('+i+')">− Undo</button>'+
+      '</div>';
     grid.appendChild(card);
   });
 }
 function buildTallyHTML(n,col){
-  let h='';for(let k=0;k<n;k++){const diag=(k+1)%5===0;h+=`<span class="tmark${diag?' diag':''}" style="background:${diag?'#FF6B6B':col}"></span>`;}return h;
+  var h='';
+  for(var k=0;k<n;k++){
+    var diag=(k+1)%5===0;
+    h+='<span class="tmark'+(diag?' diag':'')+'" style="background:'+(diag?'#D97706':col)+'"></span>';
+  }
+  return h;
 }
 function addVote(i){votes[i]=Math.min(votes[i]+1,12);refresh();}
 function removeVote(i){votes[i]=Math.max(votes[i]-1,0);refresh();}
 function resetAll(){votes=ITEMS.map(()=>0);refresh();}
+
 function refresh(){
-  ITEMS.forEach((_,i)=>{
-    const tn=document.getElementById('tally'+i);if(tn)tn.innerHTML=buildTallyHTML(votes[i],BAR_COLORS[i]);
-    const nn=document.getElementById('num'+i);if(nn)nn.textContent=votes[i];
+  ITEMS.forEach(function(_,i){
+    var tn=document.getElementById('tally'+i);if(tn)tn.innerHTML=buildTallyHTML(votes[i],BAR_COLORS[i]);
+    var nn=document.getElementById('num'+i);if(nn)nn.textContent=votes[i];
   });
   buildChart();buildFacts();
 }
 
+/* ── Bar Chart ── */
 function buildChart(){
-  const maxV=Math.max(...votes,1);const MAX_H=120;
-  const bars=document.getElementById('chartBars');bars.innerHTML='';
-  ITEMS.forEach((item,i)=>{
-    const col=document.createElement('div');col.className='bar-col';
-    const barH=Math.round((votes[i]/maxV)*MAX_H);
-    col.innerHTML=`<div class="bar-n" style="color:${BAR_COLORS[i]}">${votes[i]||''}</div><div class="bar" style="height:${barH}px;background:${BAR_COLORS[i]}"></div><div class="bar-em">${item.em}</div><div class="bar-name">${item.name}</div>`;
+  var maxV=Math.max.apply(null,votes.concat([1]));var MAX_H=110;
+  var bars=document.getElementById('chartBars');bars.innerHTML='';
+  ITEMS.forEach(function(item,i){
+    var col=document.createElement('div');col.className='bar-col';
+    var barH=Math.round((votes[i]/maxV)*MAX_H);
+    col.innerHTML=
+      '<div class="bar-n" style="color:'+BAR_COLORS[i]+'">'+(votes[i]||'')+'</div>'+
+      '<div class="bar" style="height:'+barH+'px;background:'+BAR_COLORS[i]+'"></div>'+
+      '<div class="bar-em">'+item.em+'</div>'+
+      '<div class="bar-name">'+item.name+'</div>';
     bars.appendChild(col);
   });
-  // y axis labels
-  const ya=document.getElementById('yAxis');ya.innerHTML='';
-  for(let y=0;y<=maxV;y+=Math.ceil(maxV/4)){const d=document.createElement('div');d.className='y-lbl';d.textContent=y;ya.appendChild(d);}
+  var ya=document.getElementById('yAxis');ya.innerHTML='';
+  var step=Math.max(1,Math.ceil(maxV/4));
+  for(var y=0;y<=maxV;y+=step){
+    var d=document.createElement('div');d.className='y-lbl';d.textContent=y;ya.appendChild(d);
+  }
 }
+
+/* ── Facts ── */
 function buildFacts(){
-  const total=votes.reduce((a,b)=>a+b,0);
-  const maxV=Math.max(...votes);const minV=Math.min(...votes);
-  const most=ITEMS.filter((_,i)=>votes[i]===maxV);
-  const least=ITEMS.filter((_,i)=>votes[i]===minV);
-  const fb=document.getElementById('factsBox');
-  if(!total){fb.innerHTML='<div class="fact-row">Add some votes to see the data facts!</div>';return;}
-  fb.innerHTML=`
-    <div class="fact-row"><span class="fact-lbl">Total votes:</span> ${total}</div>
-    <div class="fact-row"><span class="fact-lbl">Most popular:</span> ${most.map(m=>m.em+' '+m.name).join(', ')} (${maxV} votes)</div>
-    <div class="fact-row"><span class="fact-lbl">Least popular:</span> ${least.map(m=>m.em+' '+m.name).join(', ')} (${minV} votes)</div>
-    <div class="fact-row"><span class="fact-lbl">Difference (most − least):</span> ${maxV-minV}</div>
-  `;
+  var total=votes.reduce(function(a,b){return a+b},0);
+  var maxV=Math.max.apply(null,votes);var minV=Math.min.apply(null,votes);
+  var most=ITEMS.filter(function(_,i){return votes[i]===maxV});
+  var least=ITEMS.filter(function(_,i){return votes[i]===minV});
+  var fb=document.getElementById('factsBox');
+  if(!total){fb.innerHTML='<div class="fact-row">Add some votes to see the data summary.</div>';return;}
+  fb.innerHTML=
+    '<div class="fact-row"><span class="fact-lbl">Total votes</span>'+total+'</div>'+
+    '<div class="fact-row"><span class="fact-lbl">Most popular</span>'+most.map(function(m){return m.em+' '+m.name}).join(', ')+' ('+maxV+')</div>'+
+    '<div class="fact-row"><span class="fact-lbl">Least popular</span>'+least.map(function(m){return m.em+' '+m.name}).join(', ')+' ('+minV+')</div>'+
+    '<div class="fact-row"><span class="fact-lbl">Difference (most − least)</span>'+(maxV-minV)+'</div>';
 }
+
 buildGrid();buildChart();buildFacts();
 
-/* Quiz */
+/* ── Quiz ── */
 function newQuiz(){
-  // Generate random vote data for quiz
-  const qVotes=ITEMS.map(()=>Math.floor(Math.random()*8)+1);
-  const maxV=Math.max(...qVotes);const maxH=80;
+  var qVotes=ITEMS.map(function(){return Math.floor(Math.random()*8)+1});
+  var maxV=Math.max.apply(null,qVotes);var maxH=80;
   document.getElementById('qFb').textContent='';
 
-  // Build mini bar chart
-  const bars=document.getElementById('quizBars');bars.innerHTML='';
-  ITEMS.forEach((item,i)=>{
-    const col=document.createElement('div');col.className='mini-col';
-    const bH=Math.round((qVotes[i]/maxV)*maxH);
-    col.innerHTML=`<div class="mini-n" style="color:${BAR_COLORS[i]}">${qVotes[i]}</div><div class="mini-bar" style="height:${bH}px;background:${BAR_COLORS[i]}"></div><div class="mini-em">${item.em}</div><div class="mini-name">${item.name}</div>`;
+  var bars=document.getElementById('quizBars');bars.innerHTML='';
+  ITEMS.forEach(function(item,i){
+    var col=document.createElement('div');col.className='mini-col';
+    var bH=Math.round((qVotes[i]/maxV)*maxH);
+    col.innerHTML=
+      '<div class="mini-n" style="color:'+BAR_COLORS[i]+'">'+qVotes[i]+'</div>'+
+      '<div class="mini-bar" style="height:'+bH+'px;background:'+BAR_COLORS[i]+'"></div>'+
+      '<div class="mini-em">'+item.em+'</div>'+
+      '<div class="mini-name">'+item.name+'</div>';
     bars.appendChild(col);
   });
 
-  // Pick a question type
-  const qType=['most','least','howmany','diff'][Math.floor(Math.random()*4)];
-  let qText='',ans='',ansNum=0;
-  const mostIdx=qVotes.indexOf(maxV);const leastIdx=qVotes.indexOf(Math.min(...qVotes));
-  if(qType==='most'){qText='Which activity got the MOST votes?';ans=ITEMS[mostIdx].em+' '+ITEMS[mostIdx].name;ansNum=mostIdx;}
-  else if(qType==='least'){qText='Which activity got the FEWEST votes?';ans=ITEMS[leastIdx].em+' '+ITEMS[leastIdx].name;ansNum=leastIdx;}
-  else if(qType==='howmany'){const idx=Math.floor(Math.random()*ITEMS.length);qText=`How many children chose ${ITEMS[idx].em} ${ITEMS[idx].name}?`;ans=''+qVotes[idx];ansNum=qVotes[idx];}
-  else{qText='How many MORE votes did '+ITEMS[mostIdx].em+' '+ITEMS[mostIdx].name+' get than '+ITEMS[leastIdx].em+' '+ITEMS[leastIdx].name+'?';ans=''+(qVotes[mostIdx]-qVotes[leastIdx]);ansNum=qVotes[mostIdx]-qVotes[leastIdx];}
-  document.getElementById('qQ').textContent=qText;
-  document.getElementById('qTitle').textContent=qText;
+  var qType=['most','least','howmany','diff'][Math.floor(Math.random()*4)];
+  var qText,ans,ansNum;
+  var mostIdx=qVotes.indexOf(maxV);
+  var leastIdx=qVotes.indexOf(Math.min.apply(null,qVotes));
 
-  // Options
-  const opts=document.getElementById('qOpts');opts.innerHTML='';
+  if(qType==='most'){
+    qText='Which activity got the most votes?';ans=ITEMS[mostIdx].em+' '+ITEMS[mostIdx].name;ansNum=mostIdx;
+  } else if(qType==='least'){
+    qText='Which activity got the fewest votes?';ans=ITEMS[leastIdx].em+' '+ITEMS[leastIdx].name;ansNum=leastIdx;
+  } else if(qType==='howmany'){
+    var idx=Math.floor(Math.random()*ITEMS.length);
+    qText='How many children chose '+ITEMS[idx].em+' '+ITEMS[idx].name+'?';ans=''+qVotes[idx];ansNum=qVotes[idx];
+  } else {
+    qText='How many more votes did '+ITEMS[mostIdx].em+' '+ITEMS[mostIdx].name+' get than '+ITEMS[leastIdx].em+' '+ITEMS[leastIdx].name+'?';
+    ans=''+(qVotes[mostIdx]-qVotes[leastIdx]);ansNum=qVotes[mostIdx]-qVotes[leastIdx];
+  }
+  document.getElementById('qQ').textContent=qText;
+  document.getElementById('qTitle').textContent='Bar chart';
+
+  var opts=document.getElementById('qOpts');opts.innerHTML='';
   if(qType==='most'||qType==='least'){
-    // options are activity names
-    const pool=ITEMS.map((item,i)=>({txt:item.em+' '+item.name,correct:i===ansNum}));
-    pool.sort(()=>Math.random()-.5).forEach(p=>{
-      const b=document.createElement('button');b.className='opt';b.style.fontSize='13px';b.style.minWidth='auto';b.style.padding='0 8px';b.textContent=p.txt;
-      b.onclick=()=>{document.querySelectorAll('#qOpts .opt').forEach(x=>x.onclick=null);const fb=document.getElementById('qFb');if(p.correct){b.classList.add('correct');fb.textContent='🎉 Yes! '+p.txt+' got the '+(qType==='most'?'most':'fewest')+' votes! ⭐';fb.style.color='var(--grass)';}else{b.classList.add('wrong');fb.textContent='Look at the tallest/shortest bar! Try again.';fb.style.color='var(--red)';document.querySelectorAll('#qOpts .opt').forEach(x=>{if(x.textContent===ans)x.classList.add('correct');});}};
+    var pool=ITEMS.map(function(item,i){return{txt:item.em+' '+item.name,correct:i===ansNum}});
+    pool.sort(function(){return Math.random()-.5});
+    pool.forEach(function(p){
+      var b=document.createElement('button');b.className='opt';
+      b.style.fontSize='13px';b.style.minWidth='auto';b.style.padding='0 10px';b.textContent=p.txt;
+      b.onclick=function(){
+        opts.querySelectorAll('.opt').forEach(function(x){x.onclick=null});
+        var fb=document.getElementById('qFb');
+        if(p.correct){
+          b.classList.add('ok');fb.textContent='🎉 Correct! '+p.txt+' got the '+(qType==='most'?'most':'fewest')+' votes.';fb.style.color='var(--ok)';
+        } else {
+          b.classList.add('no');fb.textContent='Look at the '+(qType==='most'?'tallest':'shortest')+' bar! The answer is '+ans+'.';fb.style.color='var(--no)';
+          opts.querySelectorAll('.opt').forEach(function(x){if(x.textContent===ans)x.classList.add('ok');});
+        }
+      };
       opts.appendChild(b);
     });
   } else {
-    const pool=new Set([ansNum]);while(pool.size<4){const w=ansNum+[-2,-1,1,2][Math.floor(Math.random()*4)];if(w>0&&w<=20)pool.add(w);}
-    [...pool].sort(()=>Math.random()-.5).forEach(n=>{
-      const b=document.createElement('button');b.className='opt';b.textContent=n;
-      b.onclick=()=>{document.querySelectorAll('#qOpts .opt').forEach(x=>x.onclick=null);const fb=document.getElementById('qFb');if(n===ansNum){b.classList.add('correct');fb.textContent='🎉 Correct! The answer is '+ansNum+'! ⭐';fb.style.color='var(--grass)';}else{b.classList.add('wrong');fb.textContent='Look carefully at the bar chart! Answer: '+ansNum;fb.style.color='var(--red)';document.querySelectorAll('#qOpts .opt').forEach(x=>{if(parseInt(x.textContent)===ansNum)x.classList.add('correct');});}};
+    var pool=new Set([ansNum]);var safety=0;
+    while(pool.size<4&&safety<50){safety++;var w=ansNum+[-2,-1,1,2][Math.floor(Math.random()*4)];if(w>0&&w<=20)pool.add(w);}
+    [...pool].sort(function(){return Math.random()-.5}).forEach(function(n){
+      var b=document.createElement('button');b.className='opt';b.textContent=n;
+      b.onclick=function(){
+        opts.querySelectorAll('.opt').forEach(function(x){x.onclick=null});
+        var fb=document.getElementById('qFb');
+        if(n===ansNum){
+          b.classList.add('ok');fb.textContent='🎉 Correct! The answer is '+ansNum+'.';fb.style.color='var(--ok)';
+        } else {
+          b.classList.add('no');fb.textContent='Look carefully at the bar chart. The answer is '+ansNum+'.';fb.style.color='var(--no)';
+          opts.querySelectorAll('.opt').forEach(function(x){if(parseInt(x.textContent)===ansNum)x.classList.add('ok');});
+        }
+      };
       opts.appendChild(b);
     });
   }
