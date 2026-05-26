@@ -34,9 +34,7 @@ html,body{width:100%;min-height:100vh;font-family:'Poppins',sans-serif;backgroun
 .rating-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.08)}
 .rc-emoji{font-size:28px;line-height:1}
 .rc-name{font-size:10px;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em}
-.tally-zone{min-height:24px;display:flex;flex-wrap:wrap;gap:1px;justify-content:center;align-items:flex-end;margin:2px 0;width:100%;padding:0 4px}
-.tmark{display:inline-block;width:3px;height:18px;border-radius:2px;margin:0 1px;vertical-align:middle;background:var(--ac);transition:all .2s}
-.tmark.diag{transform:rotate(28deg);margin-left:-5px;background:#D97706}
+.tally-zone{min-height:28px;display:flex;flex-wrap:wrap;gap:3px;justify-content:center;align-items:center;margin:2px 0;width:100%;padding:0 4px}
 .rc-num{font-family:'Grandstander',cursive;font-size:26px;font-weight:900;color:var(--ink);line-height:1}
 .vote-row{display:flex;gap:4px;align-items:center;justify-content:center;width:100%;margin-top:2px}
 .heart-btn{font-size:16px;cursor:pointer;background:var(--ac);border:none;padding:6px 0;border-radius:8px;transition:all .15s;line-height:1;flex:1;display:flex;align-items:center;justify-content:center;color:#fff}
@@ -49,13 +47,17 @@ html,body{width:100%;min-height:100vh;font-family:'Poppins',sans-serif;backgroun
 .chart-section{background:rgba(0,0,0,.02);border:1.5px solid rgba(0,0,0,.06);border-radius:16px;padding:14px;margin-bottom:14px}
 .chart-title{font-family:'Grandstander',cursive;font-size:13px;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
 .chart-wrap{position:relative}
-.chart-bars{display:flex;gap:10px;align-items:flex-end;height:130px;border-bottom:2.5px solid var(--ink);border-left:2px solid var(--ink);padding:0 6px;margin-left:28px}
-.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
-.bar{border-radius:6px 6px 0 0;width:100%;min-height:4px;transition:height .5s cubic-bezier(.36,1.4,.6,1)}
-.bar-n{font-family:'Grandstander',cursive;font-size:13px;font-weight:900;min-height:18px;text-align:center}
-.bar-em{font-size:16px}
-.bar-name{font-size:10px;font-weight:700;color:var(--ink2);text-align:center;max-width:60px;word-break:break-word}
-.y-axis{position:absolute;left:0;top:0;height:130px;display:flex;flex-direction:column-reverse;justify-content:space-between;width:26px}
+/* bar-area: fixed height, bars live here only */
+.chart-bar-area{display:flex;gap:10px;align-items:flex-end;height:120px;border-bottom:2.5px solid var(--ink);border-left:2px solid var(--ink);padding:0 6px;margin-left:28px;overflow:hidden}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bar{border-radius:5px 5px 0 0;width:80%;min-height:3px;transition:height .5s cubic-bezier(.36,1.4,.6,1)}
+/* label row sits below the chart area */
+.chart-label-row{display:flex;gap:10px;margin-left:28px;padding:0 6px;margin-top:6px}
+.bar-lbl{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px}
+.bar-n{font-family:'Grandstander',cursive;font-size:12px;font-weight:900;text-align:center;color:var(--ink)}
+.bar-em{font-size:15px;line-height:1}
+.bar-name{font-size:9px;font-weight:700;color:var(--ink2);text-align:center;word-break:break-word}
+.y-axis{position:absolute;left:0;top:0;height:120px;display:flex;flex-direction:column-reverse;justify-content:space-between;width:26px}
 .y-lbl{font-size:10px;font-weight:700;color:#9CA3AF;text-align:right;padding-right:3px}
 
 /* ── Facts Panel ── */
@@ -117,7 +119,8 @@ html,body{width:100%;min-height:100vh;font-family:'Poppins',sans-serif;backgroun
         <div class="chart-title">Bar chart</div>
         <div class="chart-wrap">
           <div class="y-axis" id="yAxis"></div>
-          <div class="chart-bars" id="chartBars"></div>
+          <div class="chart-bar-area" id="chartBars"></div>
+          <div class="chart-label-row" id="chartLabels"></div>
         </div>
       </div>
 
@@ -184,12 +187,31 @@ function buildGrid(){
   });
 }
 function buildTallyHTML(n,col){
+  // Render proper tally marks: groups of 5 (4 vertical + 1 diagonal slash)
   var h='';
-  for(var k=0;k<n;k++){
-    var diag=(k+1)%5===0;
-    h+='<span class="tmark'+(diag?' diag':'')+'" style="background:'+(diag?'#D97706':col)+'"></span>';
+  var groups=Math.floor(n/5);
+  var rem=n%5;
+  // Full groups of 5
+  for(var g=0;g<groups;g++){
+    h+='<svg width="24" height="24" viewBox="0 0 24 24" style="display:inline-block;vertical-align:middle">';
+    // 4 vertical lines
+    for(var v=0;v<4;v++){
+      h+='<line x1="'+(3+v*5)+'" y1="3" x2="'+(3+v*5)+'" y2="21" stroke="'+col+'" stroke-width="2.2" stroke-linecap="round"/>';
+    }
+    // diagonal slash
+    h+='<line x1="1" y1="21" x2="23" y2="3" stroke="#D97706" stroke-width="2.2" stroke-linecap="round"/>';
+    h+='</svg>';
   }
-  return h;
+  // Remaining vertical lines
+  if(rem>0){
+    var w=3+(rem-1)*5+3;
+    h+='<svg width="'+w+'" height="24" viewBox="0 0 '+w+' 24" style="display:inline-block;vertical-align:middle">';
+    for(var v=0;v<rem;v++){
+      h+='<line x1="'+(3+v*5)+'" y1="3" x2="'+(3+v*5)+'" y2="21" stroke="'+col+'" stroke-width="2.2" stroke-linecap="round"/>';
+    }
+    h+='</svg>';
+  }
+  return h||'<span style="font-size:10px;color:#ccc">–</span>';
 }
 function addVote(i){votes[i]=Math.min(votes[i]+1,12);refresh();}
 function removeVote(i){votes[i]=Math.max(votes[i]-1,0);refresh();}
@@ -207,15 +229,20 @@ function refresh(){
 function buildChart(){
   var maxV=Math.max.apply(null,votes.concat([1]));var MAX_H=110;
   var bars=document.getElementById('chartBars');bars.innerHTML='';
+  var lbls=document.getElementById('chartLabels');lbls.innerHTML='';
   ITEMS.forEach(function(item,i){
+    // bar only in the bar area
     var col=document.createElement('div');col.className='bar-col';
     var barH=Math.round((votes[i]/maxV)*MAX_H);
-    col.innerHTML=
-      '<div class="bar-n" style="color:'+BAR_COLORS[i]+'">'+(votes[i]||'')+'</div>'+
-      '<div class="bar" style="height:'+barH+'px;background:'+BAR_COLORS[i]+'"></div>'+
+    col.innerHTML='<div class="bar" style="height:'+barH+'px;background:'+BAR_COLORS[i]+'"></div>';
+    bars.appendChild(col);
+    // labels below
+    var lbl=document.createElement('div');lbl.className='bar-lbl';
+    lbl.innerHTML=
+      '<div class="bar-n" style="color:'+BAR_COLORS[i]+'">'+(votes[i]||'0')+'</div>'+
       '<div class="bar-em">'+item.em+'</div>'+
       '<div class="bar-name">'+item.name+'</div>';
-    bars.appendChild(col);
+    lbls.appendChild(lbl);
   });
   var ya=document.getElementById('yAxis');ya.innerHTML='';
   var step=Math.max(1,Math.ceil(maxV/4));
